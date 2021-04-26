@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+    <title>Web Store</title>
+    <link rel = "stylesheet" type = "text/css" href = "style.css"/>
+    <script>
+    function checkForm() {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var user = document.forms["webForm"]["uname"].value;
+        var pass = document.forms["webForm"]["pswd"].value;
+        var loginValid = false;
+        var Paper = document.forms["webForm"]["Paper"].checked;
+        var PaperAm = document.forms["webForm"]["PaperQuant"].value;
+        var Pen = document.forms["webForm"]["Pen"].checked;
+        var PenAm = document.forms["webForm"]["PenQuant"].value;
+        var Pencil = document.forms["webForm"]["Pencil"].checked;
+        var PencilAm = document.forms["webForm"]["PencilQuant"].value;
+        var ShippingValue = document.forms["webForm"]["Shipping"].value;
+        if (re.test(user)){
+            if (pass != ""){
+                loginValid = true;
+            }
+        }
+        if(!loginValid){
+            alert("Invalid login. Username must be an email and Password cannot be empty.");
+            return false;
+        }
+        if(Paper && (PaperAm == null || PaperAm == "")){
+            alert("Select an amount of Paper wanted");
+            return false;
+        }
+        if(!Paper && (PaperAm != null || PaperAm != "")){
+            document.forms["webForm"]["PaperQuant"].value = 0;
+        }
+        if(Pen && (PenAm == null || PenAm == "")){
+            alert("Select an amount of Pens wanted");
+            return false;
+        }
+        if(!Pen && (PenAm != null || PenAm != "")){
+            document.forms["webForm"]["PenQuant"].value = 0;
+        }
+        if(Pencil && (PencilAm == null || PencilAm == "")){
+            alert("Select an amount of Pencils wanted");
+            return false;
+        }
+        if(!Pencil && (PencilAm == null || PencilAm == "")){
+            document.forms["webForm"]["PencilQuant"].value = 0;
+        }
+        if(ShippingValue == null || ShippingValue == ""){
+            alert("Must select a Shipping Option.");
+            return false;
+        }
+
+    }
+</script>
+</head>
+<body>
+    <form name="webForm" action="customerBackend.php" method="post" onsubmit="return checkForm()" >
+        Username: <input type="text" name = "uname">
+        Password: <input type="password" name = "pswd"><br><br>
+
+        Items for Sale:<br>
+        <input type="checkbox" id="Paper" name="Items" value="Paper">
+        <label for="Paper">$00.02 Sheet of Paper</label>
+        <input for="Paper" type="number" name="PaperQuant" min="0" max ="500"><br>
+
+        <input type="checkbox" id="Pen" name="Items" value="Pen">
+        <label for="Pen">$11.92 Ballpoint Pen</label>
+        <input for="Pen" type="number" name="PenQuant" min="0" max ="10"><br>
+        
+        <input type="checkbox" id="Pencil" name="Items" value="Pencil">
+        <label for="Pencil">$04.15 Mechanical Pencil</label>
+        <input for="Pencil" type="number" name="PencilQuant" min="0" max ="10"><br><br>
+
+        Shipping Options:<br>
+        <input type="radio" id="Free7" name="Shipping" value="Free 7 Day">
+        <label for="Free7">Free 7 day</label><br>
+        <input type="radio" id="50on" name="Shipping" value="Over Night">
+        <label for="50on">$50.00 over night</label><br>
+        <input type="radio" id="5td" name="Shipping" value="Three Days">
+        <label for="5td">$5.00 three day</label><br>
+        <input type="reset" value="Reset"><input type="submit" value="Submit">
+    </form>
+    <!-- <form action="customerBackend.php" method="post" onsubmit="checkForm()" >
+        Enter name: <input type="text" name="fname">
+        <input type="submit" value="Submit">
+    </form> -->
+</body>
